@@ -1,1 +1,1 @@
-# servlet_project_2026
+# java_servlet_project_2026
