@@ -13,3 +13,5 @@
 
 # To download servlet-api jar 
 - https://repo1.maven.org/maven2/javax/servlet/javax.servlet-api/4.0.1/
+
+This is test java servlet project.
