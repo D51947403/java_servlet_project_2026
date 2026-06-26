@@ -18,4 +18,18 @@
 <servlet-name>DemoServlet</servlet-name>
 <url-pattern>/demo-servlet</url-pattern>
 </servlet-mapping> 
+
+ 
+ <servlet>
+<servlet-name>testname</servlet-name>
+<servlet-class>Test1</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>testname</servlet-name>
+<url-pattern>/testurl</url-pattern>
+</servlet-mapping> 
+
+
+
 </web-app>
