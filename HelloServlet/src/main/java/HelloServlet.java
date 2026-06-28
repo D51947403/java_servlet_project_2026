@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  *  URL = http://localhost:8080/HelloServlet/welcome
  */
-@WebServlet(description = "HelloServletDescription", urlPatterns = { "/welcome" })
+@WebServlet(description = "Hello Servlet", urlPatterns = { "/hello" })
 public class HelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
