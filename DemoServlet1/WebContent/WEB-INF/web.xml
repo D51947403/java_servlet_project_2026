@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
-  <display-name>HelloServlet</display-name>
+  <display-name>DemoServlet1</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>default.html</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  
+ <servlet>
+<servlet-name>DemoServlet</servlet-name>
+<servlet-class>DemoServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>DemoServlet</servlet-name>
+<url-pattern>/demo-servlet</url-pattern>
+</servlet-mapping> 
+
+ 
+ <servlet>
+<servlet-name>testname</servlet-name>
+<servlet-class>Test1</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>testname</servlet-name>
+<url-pattern>/testurl</url-pattern>
+</servlet-mapping> 
 
 
 
