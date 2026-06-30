@@ -6,9 +6,20 @@
     <welcome-file>default.html</welcome-file>
   </welcome-file-list>
   
+   <context-param>  
+        <param-name>companyName</param-name>  
+        <param-value>MainahaTechnology</param-value>  
+    </context-param> 
+     <context-param>  
+        <param-name>companyCity</param-name>  
+        <param-value>Satna</param-value>  
+    </context-param>  
+  
+  
    <servlet>
     <servlet-name>LoginServlet</servlet-name>
     <servlet-class>org.user.LoginServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
@@ -17,6 +28,7 @@
   <servlet>
     <servlet-name>WelcomeServlet</servlet-name>
     <servlet-class>org.user.WelcomeServlet</servlet-class>
+     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>WelcomeServlet</servlet-name>
@@ -25,13 +37,61 @@
   
   
     <servlet>
+     <description>AdminServlet</description>
+    <display-name>AdminServlet</display-name>
     <servlet-name>AdminServlet</servlet-name>
     <servlet-class>org.user.AdminServlet</servlet-class>
+     <load-on-startup>-1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>AdminServlet</servlet-name>
     <url-pattern>/admin</url-pattern>
      <url-pattern>/admin/*</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+     <description>DBServlet</description>
+    <display-name>DBServlet</display-name>
+    <servlet-name>DBServlet</servlet-name>
+    <servlet-class>org.user.DBServlet</servlet-class>
+     
+     <init-param>  
+      <param-name>DBEnv</param-name>  
+      <param-value>DEV</param-value>  
+    </init-param> 
+    
+    <init-param>  
+      <param-name>DBtype</param-name>  
+      <param-value>MySQL</param-value>  
+    </init-param> 
+    
+    <init-param>  
+      <param-name>driver</param-name>  
+      <param-value>com.mysql.cj.jdbc.Driver</param-value>  
+    </init-param>  
+    
+    <init-param>  
+    <param-name>url</param-name>  
+    <param-value>jdbc:mysql://localhost:3306/library_db</param-value>  
+    </init-param>  
+
+	<init-param>  
+	<param-name>username</param-name>  
+	<param-value>root</param-value>  
+	</init-param>  
+	
+	<init-param>  
+	<param-name>password</param-name>  
+	<param-value>root</param-value>  
+	</init-param>  
+     
+      <load-on-startup>-1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>DBServlet</servlet-name>
+    <url-pattern>/DBServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>

@@ -2,7 +2,9 @@ package org.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -53,7 +55,23 @@ public class AdminServlet extends HttpServlet {
         out.print("<br/> Welcome to admin screen "+address);  
         out.print("<br/> Welcome to admin screen "+age); 
         
-        out.close();  
+        
+        out.print("<br><br>"); 
+	    out.print("======================================="); 
+	    // Servlet Context Scope --Global
+	    
+	    ServletContext context=getServletContext();  
+	    Enumeration<String> contextEnum=context.getInitParameterNames();  
+	          
+	    String conetxtparam="";  
+	    while(contextEnum.hasMoreElements()){  
+	    	conetxtparam=contextEnum.nextElement();  
+	    	out.print("<br>Name: "+conetxtparam);  
+	        out.print("<br>value: "+context.getInitParameter(conetxtparam));  
+	    }  
+	    
+	    out.close();  
+
   
                 }catch(Exception e){System.out.println(e);}  
     } 
@@ -65,6 +83,22 @@ public class AdminServlet extends HttpServlet {
 		 PrintWriter out= response.getWriter();
 		 
 		 out.print("<html> <body> This is admin servlet</body></html>");
+		 
+		 out.print("<br><br>"); 
+		    out.print("======================================="); 
+		    // Servlet Context Scope --Global
+		    
+		    ServletContext context=getServletContext();  
+		    Enumeration<String> contextEnum=context.getInitParameterNames();  
+		          
+		    String conetxtparam="";  
+		    while(contextEnum.hasMoreElements()){  
+		    	conetxtparam=contextEnum.nextElement();  
+		    	out.print("<br>Name: "+conetxtparam);  
+		        out.print("<br>value: "+context.getInitParameter(conetxtparam));  
+		    }  
+		    
+		    out.close();  
 		 
 	}
 	
