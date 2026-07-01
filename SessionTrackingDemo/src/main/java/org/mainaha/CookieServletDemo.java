@@ -61,8 +61,9 @@ public class CookieServletDemo extends HttpServlet {
 		    response.addCookie(passCookie);//adding cookie in the response --2 
 		  
 		    out.print("<br>");
+		    out.print("<br>");
 		    //creating submit button  
-		    out.print("<form action='home'>");  
+		    out.print("<form action='home' method='get'>");  
 		    out.print("<input type='submit' value='Home'>");  
 		    out.print("</form>");  
 		    out.print("<br>");

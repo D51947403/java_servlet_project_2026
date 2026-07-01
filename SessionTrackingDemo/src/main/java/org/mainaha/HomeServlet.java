@@ -49,10 +49,12 @@ public class HomeServlet extends HttpServlet {
 			    userName =ck[0].getValue();
 			    userId=ck[1].getValue();
 			    userPass=ck[2].getValue();
+			   
 			    out.print("<br>");
 			    out.print("Welcome "+userName +"[ "+userId+" ]"); 
 			    
 			    System.out.println("userPass "+userPass);
+			    
 			    out.print("<br>");
 			    out.print("<br>");
 			    out.print(" <a href='/SessionTrackingDemo/index.html' accesskey='1' title='Index Page'>Index Page</a>");
