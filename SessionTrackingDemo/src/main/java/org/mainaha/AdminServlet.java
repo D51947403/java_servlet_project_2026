@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class CookieServletDemo
  */
-@WebServlet(urlPatterns = "/home" ,description = "HomeServlet")
-public class HomeServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/admin" ,description = "AdminServlet")
+public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomeServlet() {
+    public AdminServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,26 +34,15 @@ public class HomeServlet extends HttpServlet {
 			    response.setContentType("text/html");  
 			    PrintWriter out = response.getWriter();  
 			      
-			    String userName= null;
-				String userPass=null;
-				String userId =null;
+			    String adminName=request.getParameter("adminName");  
+			    String adminId =request.getParameter("adminId");  
 					    
 				 out.print("<br>");
-				 out.print("Home Servlet get method");
+				 out.print("Admin Servlet get method");
 				    
-			    Cookie ck[] = request.getCookies();  
-			    
-			    for(int i = 0; i < ck.length; i++) {  
-			        out.print("<br>" + ck[i].getName() + " " + ck[i].getValue());  
-			    }  
-			    userName =ck[0].getValue();
-			    userId=ck[1].getValue();
-			    userPass=ck[2].getValue();
 			   
 			    out.print("<br>");
-			    out.print("Welcome "+userName +"[ "+userId+" ]"); 
-			    
-			    System.out.println("userPass "+userPass);
+			    out.print("Welcome "+adminName +"[ "+adminId+" ]"); 
 			    
 			    out.print("<br>");
 			    out.print("<br>");
@@ -69,28 +58,7 @@ public class HomeServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 try{  
-		response.setContentType("text/html");  
-		    PrintWriter out = response.getWriter();  
-		          
-		    String clientName=request.getParameter("clientName");  
-		    String clientPass=request.getParameter("clientPass");  
-		    String clientId =request.getParameter("clientId"); 
-		    
-		    System.out.println("clientPass "+clientPass);
-		    
-		    out.print("<br>");
-			 out.print("Home Servlet post method");
-		  
-		    out.print("<br>");
-		    out.print("Welcome: "+clientName +" [ "+clientId+" ]"); 
-		    
-		    out.print("<br>");
-		    out.print("<br>");
-		    out.print(" <a href='/SessionTrackingDemo/index.html' accesskey='1' title='Index Page'>Index Page</a>");
-		  
-		    out.close();
-		 }catch(Exception e){System.out.println(e);}  
+		doGet(request, response);
 	}
 	
 
