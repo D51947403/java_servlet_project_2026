@@ -13,7 +13,7 @@ public class EmployeeDao {
 		int status = 0;
 
 		try {
-			Connection con = Util.getConnection();
+			Connection con = DbConnectUtil.getConnection();
 			String inserSql="insert into employee (emp_name , mail_id , pswd , country) \r\n" + 
 					"value(? , ?, ? , ?) ;";
 			PreparedStatement  ps =con.prepareStatement(inserSql);
@@ -36,7 +36,7 @@ public class EmployeeDao {
 	public static int updateEmployee(EmployeeDTO empObj) {
 		int status = 0;
 		try {
-			Connection con = Util.getConnection();
+			Connection con = DbConnectUtil.getConnection();
 			String updateSql="update employee e set e.emp_name= ? ,e.mail_id=? ,  \r\n" + 
 					"e.pswd=? , e.country=?  where emp_id= ? ;";
 			PreparedStatement  ps =con.prepareStatement(updateSql);
@@ -60,7 +60,7 @@ public class EmployeeDao {
 	public static int deleteEmployee(int empId) {
 		int status = 0;
 		try {
-			Connection con = Util.getConnection();
+			Connection con = DbConnectUtil.getConnection();
 			String deleteSql="update employee e set e.is_deleted='Y' where emp_id= ? ;";
 			PreparedStatement  ps =con.prepareStatement(deleteSql);
 			ps.setInt(1 , empId);
@@ -78,7 +78,7 @@ public class EmployeeDao {
 
 		EmployeeDTO empObj = new EmployeeDTO();
 		try {
-			Connection con = Util.getConnection();
+			Connection con = DbConnectUtil.getConnection();
 			String selectSql="select emp_id , emp_name , mail_id , pswd , country  from employee where \r\n" + 
 					" emp_id =? and is_deleted='N' ;";
 			PreparedStatement  ps =con.prepareStatement(selectSql);
@@ -107,7 +107,7 @@ public class EmployeeDao {
 		EmployeeDTO empObj = null;
 
 		try {
-			Connection con = Util.getConnection();
+			Connection con = DbConnectUtil.getConnection();
 			String selectAllSql="select emp_id ,emp_name , mail_id ,pswd , country  from employee where is_deleted='N' ;";
 			PreparedStatement  ps =con.prepareStatement(selectAllSql);
 			ResultSet rs = ps.executeQuery() ;
@@ -138,7 +138,7 @@ public class EmployeeDao {
 		List<EmployeeDTO> empList = new ArrayList<EmployeeDTO>();
 		EmployeeDTO empObj = null;
 		try {
-			Connection con = Util.getConnection();
+			Connection con = DbConnectUtil.getConnection();
 			String selectSql="select emp_id , emp_name , mail_id , pswd , country  from employee where emp_name like ? and is_deleted='N';";
 			PreparedStatement  ps =con.prepareStatement(selectSql);
 			ps.setString(1 , viewEmpName + "%");

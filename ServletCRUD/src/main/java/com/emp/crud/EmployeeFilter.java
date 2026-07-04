@@ -45,7 +45,7 @@ public class EmployeeFilter extends HttpFilter implements Filter {
 		String empName=request.getParameter("empName");
 		System.out.println("EmployeeFilter filter called");
 		
-		if (containsDigit(empName)) {
+		if (Util.containsDigit(empName)) {
 			 // \\d matches any digit from 0 to 9
 			empName = empName.replaceAll("\\d", "");
 		}
@@ -62,15 +62,4 @@ public class EmployeeFilter extends HttpFilter implements Filter {
 	}
 
 	
-	 private static boolean containsDigit(String str) {
-	        if (str == null || str.isEmpty()) {
-	            return false;
-	        }
-	        for (int i = 0; i < str.length(); i++) {
-	            if (Character.isDigit(str.charAt(i))) {
-	                return true; // Stop and return true on the first digit found
-	            }
-	        }
-	        return false;
-	    }
 }
