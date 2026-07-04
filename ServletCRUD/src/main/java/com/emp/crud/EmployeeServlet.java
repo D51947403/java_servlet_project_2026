@@ -42,11 +42,11 @@ public class EmployeeServlet extends HttpServlet {
 	        
 	        if ("/viewById".equals(pathInfo)) {
 	            // Handle profile GET
-	        	 out.println("<h1>Employees BY ID</h1>"); 
-	        	
+	        	 viewEmployeeById(request, out);
+	     	   
 	        } else if ("/viewByName".equals(pathInfo)) {
 	            // Handle settings GET
-	       	 out.println("<h1>Employees BY Name</h1>"); 
+	        	viewEmployeeByName(request, out);
 	        }else {
 		
 	            listAllEmployee(out);  
@@ -54,6 +54,58 @@ public class EmployeeServlet extends HttpServlet {
 	        out.close();
 	}
 
+	/**
+	 * @param request
+	 * @param out
+	 */
+	private void viewEmployeeById(HttpServletRequest request, PrintWriter out) {
+		out.println("<h1>Employees BY ID</h1>"); 
+		 String viewEmpId = request.getParameter("viewEmpId");
+		int empId = 0; 
+		if(viewEmpId != null) {
+			empId= Integer.parseInt(viewEmpId); 
+		}
+		 
+   	   EmployeeDTO emp=EmployeeService.getEmployeeById(empId);
+   	   
+   	   if (emp==null) {
+		  out.print("No record found for employee Id: "+empId); 
+   	   }{ 
+		out.print("<table border='1'>");  
+		out.print("<tr><td>Employee ID: </td><td>"+emp.getEmpId()+"</td></tr>");  
+		out.print("<tr><td>Name:</td><td>"+emp.getEmpName()+"</td></tr>");  
+		out.print("<tr><td>Email:</td><td>"+emp.getMailId()+"</td></tr>");  
+		out.print("<tr><td>Country:</td><td>"+emp.getCountry()+"<td></tr>");   
+		out.print("</table>");  
+   	   }
+	}
+
+	/**
+	 * @param request
+	 * @param out
+	 */
+	private void viewEmployeeByName(HttpServletRequest request, PrintWriter out) {
+		 out.println("<h1>Employees BY Name</h1>");  
+		 String viewEmpName = request.getParameter("viewEmpName");
+		 List<EmployeeDTO> empList=null;
+		if(viewEmpName != null) {
+			 empList=EmployeeService.getEmployeeByName(viewEmpName);
+		}
+
+   	   if (empList==null) {
+		  out.print("No record found for employee Id: "+viewEmpName); 
+   	   }{ 
+   		  out.print("<table border='1' width='80%'");  
+	      out.print("<tr><th>Id</th><th>Name</th><th>Email</th><th>Country</th></tr>");  
+	        for(EmployeeDTO e:empList){  
+	       out.print("<tr>"
+	       		+ "<td>"+e.getEmpId()+"</td><td>"+e.getEmpName()+"</td>"+  
+	              "<td>"+e.getMailId()+"</td><td>"+e.getCountry()+"</td>"
+	              + "</tr>");  
+	      }  
+	      out.print("</table>");  
+   	   }
+	}
 	/**
 	 * @param out
 	 */
@@ -213,7 +265,6 @@ public class EmployeeServlet extends HttpServlet {
 	          
 	        EmployeeDTO emp=EmployeeService.getEmployeeById(id);
 	          
-//	        out.print("<form action='updateEmployee' method='post'>");  
 	        out.print("<form action='updateEmployee' method='post'>");  
 	        out.print("<table>");  
 	        out.print("<tr><td></td><td><input type='hidden' name='editEmpId' value='"+emp.getEmpId()+"'/></td></tr>");  

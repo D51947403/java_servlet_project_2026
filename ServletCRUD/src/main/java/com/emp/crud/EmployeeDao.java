@@ -134,5 +134,36 @@ public class EmployeeDao {
 
 	}
 
+	public static List<EmployeeDTO> getEmployeeByName(String viewEmpName) {
+		List<EmployeeDTO> empList = new ArrayList<EmployeeDTO>();
+		EmployeeDTO empObj = null;
+		try {
+			Connection con = Util.getConnection();
+			String selectSql="select emp_id , emp_name , mail_id , pswd , country  from employee where emp_name like ? and is_deleted='N';";
+			PreparedStatement  ps =con.prepareStatement(selectSql);
+			ps.setString(1 , viewEmpName + "%");
+			ResultSet rs = ps.executeQuery() ;
+			
+			while (rs.next()) {
+				empObj = new EmployeeDTO() ;
+				
+				empObj.setEmpId(rs.getInt(1));
+				empObj.setEmpName(rs.getString(2));
+				empObj.setMailId(rs.getString(3));
+				empObj.setPassword(rs.getString(4));
+				empObj.setCountry(rs.getString(5));
+				
+				empList.add(empObj);
+			}
+			
+			con.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return empList;
+
+	}
+
 	
 }

@@ -9,8 +9,8 @@ public class Util {
 		Connection con = null;
 		String url ="jdbc:mysql://localhost:3306";
 		String dbSchema="servlet_crud";
-		String userName="******";
-		String password="******";
+		String userName="root";
+		String password="root";
 		try {
 
 			// This is deprecated.

@@ -35,4 +35,9 @@ public class EmployeeService {
 				empObj.setEmpName(empName);
 		return EmployeeDao.updateEmployee(empObj);
 	}
+
+	public static List<EmployeeDTO> getEmployeeByName(String viewEmpName) {
+		// TODO Auto-generated method stub
+		return EmployeeDao.getEmployeeByName(viewEmpName);
+	}
 }
