@@ -34,7 +34,7 @@ public class EmployeeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		LOGGER.info("GET Method ");
+		LOGGER.info("Calling GET Method ");
 		 response.setContentType("text/html");  
 	      PrintWriter out=response.getWriter();  
 		// Contains the sub-path
@@ -93,7 +93,7 @@ public class EmployeeServlet extends HttpServlet {
 		}
 
    	   if (empList==null) {
-		  out.print("No record found for employee Id: "+viewEmpName); 
+		  out.print("No record found for employee name: "+viewEmpName); 
    	   }{ 
    		  out.print("<table border='1' width='80%'");  
 	      out.print("<tr><th>Id</th><th>Name</th><th>Email</th><th>Country</th></tr>");  
@@ -111,6 +111,7 @@ public class EmployeeServlet extends HttpServlet {
 	 */
 	private void listAllEmployee(PrintWriter out) {
 		  out.println("<a href='index.html'>Add New Employee</a>");  
+		  out.println("<br/>");
 	      out.println("<h1>Employees List</h1>");  
 	        
 	      List<EmployeeDTO> list=EmployeeService.getEmployyeList();
@@ -119,22 +120,24 @@ public class EmployeeServlet extends HttpServlet {
 	      out.print("<tr><th>Id</th><th>Name</th><th>Email</th><th>Country</th> "+ 
 	              " <th>Edit</th><th>Delete</th></tr>");  
 	        for(EmployeeDTO e:list){  
-	       out.print("<tr><td>"+e.getEmpId()+"</td><td>"+e.getEmpName()+"</td>"+  
+	       out.print("<tr>"
+	       		+ "<td>"+e.getEmpId()+"</td><td>"+e.getEmpName()+"</td>"+  
 	              "<td>"+e.getMailId()+"</td><td>"+e.getCountry()+"</td>"+
 	              // Form uses POST because HTML doesn't natively support PUT
-	              "<td><form action='editEmployee' method='post'> \r\n"
+	              "<td><form action='editEmployee' method='post'> "
 	              // Hidden input to flag this as a PUT operation
 	              +"<input type='hidden' name='_method' value='PUT'>"
-	              + "     <input type='hidden' name='editEmpId' value='"+e.getEmpId()+"'/> \r\n"
+	              + "     <input type='hidden' name='editEmpId' value='"+e.getEmpId()+"'/> "
 	              + "    <button type='submit'>Edit</button> \r\n"
 	              + "</form></td>"+
 	              // Form uses POST because HTML doesn't natively support DELETE
-					"<td><form action='deleteEmployee' method='post'> \r\n"
+					"<td><form action='deleteEmployee' method='post'> "
 					  // Hidden input to flag this as a PUT operation
 		              +"<input type='hidden' name='_method' value='DELETE'>"
-					+ "     <input type='hidden' name='deleteEmpId' value='"+e.getEmpId()+"' /> \r\n"
+					+ "     <input type='hidden' name='deleteEmpId' value='"+e.getEmpId()+"'/> "
 					+ "    <button type='submit'>Delete</button> \r\n"
-					+ "</form></td></tr>");  
+					+ "</form></td>"
+					+ "</tr>");  
 	      }  
 	      out.print("</table>");  
 	        
@@ -226,7 +229,11 @@ public class EmployeeServlet extends HttpServlet {
 		int empId=Integer.parseInt(editEmpId);  
 		
 		// using through filter
-		String empName=(String) request.getAttribute("empNameFromFilter");
+		String empName=(String) request.getAttribute("empNameFromFilter"); 
+		
+		// empName direct from Form  
+		String ename=request.getParameter("empName");  
+		LOGGER.info("Employee Name from form"+ ename); 
 		
 		String password=request.getParameter("password");  
 		String mailId=request.getParameter("mailId");  

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class DisplayImage
  */
 @WebServlet("/displayImage")
-public class DisplayImage extends HttpServlet {
+public class DisplayImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	  public void doGet(HttpServletRequest request,HttpServletResponse response)  
