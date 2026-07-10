@@ -36,9 +36,13 @@ public class CounterServlet extends HttpServlet {
 
 	        Integer count = (Integer)ctx.getAttribute("pageCount");
 
-	        out.println( "CounterServlet");
+	        out.println( "<h2>CounterServlet </h2> <br/>");
 	        out.println(count + ": pageview");
+	        // incrementing counter value here
 	        ctx.setAttribute("pageCount", ++count);
+	        out.println( "<br/> <br/>");
+	        
+	        out.println("<a href='index.html'>Index Page</a>");  
 	}
 
 	/**

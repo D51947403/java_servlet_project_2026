@@ -6,10 +6,31 @@
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
   
+    <display-name>Servlet Listeners Demo</display-name>
+  
+   <context-param>
+    <param-name>DBUSER</param-name>
+    <param-value>****</param-value>
+  </context-param>
+  <context-param>
+    <param-name>DBPWD</param-name>
+    <param-value>****</param-value>
+  </context-param>
+  <context-param>
+    <param-name>DBURL</param-name>
+    <param-value>jdbc:mysql://localhost:3306/servlet_crud</param-value>
+  </context-param>
+    <context-param>
+    <param-name>DBDRIVER</param-name>
+    <param-value>com.mysql.cj.jdbc.Driver</param-value>
+  </context-param>
+  
   <listener>
    <description>My Servlet Context listener Demo</description>
    <display-name>ServletContextListenerDemo</display-name>
    <listener-class>com.listenerdemo.ServletContextListenerDemo</listener-class>
   </listener>
+  
+  
   
 </web-app>

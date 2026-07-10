@@ -10,3 +10,4 @@
 # References
 - https://www.geeksforgeeks.org/java/servlet-event-and-listener/
 - https://www.geeksforgeeks.org/java/servlet-context-event-and-context-listener/
+- https://www.tpointtech.com/servletcontextevent
