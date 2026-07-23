@@ -13,6 +13,11 @@
         <servlet-name>employeeJsp</servlet-name>
         <jsp-file>/employee.jsp</jsp-file>
     </servlet>
+    
+     <servlet>
+        <servlet-name>displayImageJsp</servlet-name>
+        <jsp-file>/displayImage.jsp</jsp-file>
+    </servlet>
 
     <!-- Map the first URL pattern POST-->
     <servlet-mapping>
@@ -37,6 +42,11 @@
     <servlet-mapping>
         <servlet-name>employeeJsp</servlet-name>
         <url-pattern>/employee/*</url-pattern>
+    </servlet-mapping>
+    
+     <servlet-mapping>
+        <servlet-name>displayImageJsp</servlet-name>
+        <url-pattern>/displayImage</url-pattern>
     </servlet-mapping>
   
 </web-app>

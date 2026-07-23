@@ -1,28 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.concurrent.ConcurrentHashMap" %>
 <%@ page import="java.util.logging.Logger" %>
 <%@ page import="com.emp.crud.EmployeeDTO" %>
 <%@ page import="com.emp.crud.EmployeeService" %>
 <%@ page import="java.io.PrintWriter" %>
+<%@ page import="java.io.IOException" %>
+<%@ page import="javax.servlet.RequestDispatcher" %>
+
 
 <%!	 
 // Instantiate the logger using the current generated Servlet class name
 private  final Logger LOGGER  = Logger.getLogger(this.getClass().getName());
 %>
 
-<%-- 1. SERVER-SIDE DATA STORE (Simulated Database using Session) --%>
-<%
-    // Fetch or initialize our mock database in the user's session
-    Map<String, String> items = (Map<String, String>) session.getAttribute("db_items");
-    if (items == null) {
-        items = new ConcurrentHashMap<String, String>();
-        items.put("1", "Original Item One");
-        items.put("2", "Original Item Two");
-        session.setAttribute("db_items", items);
-    }
-%>
 
 <%-- 2. SERVER-SIDE FILTER & CONTROLLER (Method Interception) --%>
 <%
@@ -63,47 +53,167 @@ private  final Logger LOGGER  = Logger.getLogger(this.getClass().getName());
     else if (httpMethod.equals("PUT")) {
         // UPDATE Operation
     	LOGGER.info("PUT Method ");
-	    
-	        String empId=request.getParameter("editEmpId");  
-	        
-	        int id=Integer.parseInt(empId);  
-	          
-	        EmployeeDTO emp=EmployeeService.getEmployeeById(id);
-	        
-%>	        
-         <h1>Edit Employee</h1> 
-	     <form action='updateEmployee' method='post'> 
-	       <table> 
-	      <tr><td></td><td><input type='hidden' name='editEmpId' value='${emp.getEmpId()}'/></td></tr>  
-	      <tr><td>Name:</td><td><input type='text' name='empName' value='${emp.getEmpName()}'/></td></tr>
-	        <tr><td>Password:</td><td><input type='password' name='password' value='${emp.getPassword()}'/></td></tr> 
-	        <tr><td>Email:</td><td><input type='email' name='mailId' value='${emp.getMailId()}'/></td></tr>
-	        <tr><td>Country:</td><td>
-	        <select name='country' style='width:150px'> 
-	        <option>India</option>
-	        <option>USA</option> 
-	        <option>UK</option>  
-	       <option>Other</option> 
-	       </select>
-	        </td></tr>
-	       <tr><td colspan='2'><input type='submit' value='Edit & Save '/></td></tr> 
-	      </table> 
-	      </form>
-	          
-  <%      
+        editEmployee(request,response);
     } 
     else if (httpMethod.equals("DELETE")) {
         // DELETE Operation
+    	String deleteEmpId=request.getParameter("deleteEmpId");  
+        int empId=Integer.parseInt(deleteEmpId);  
+        EmployeeService.deleteEmployee(empId);
+        response.sendRedirect("employee");  
       
     }else{
     	 // GET falls through naturally to render the UI below
+   
+    	 String pathInfo = request.getPathInfo(); 
+	        
+	        if ("/viewById".equals(pathInfo)) {
+	            // Handle profile GET
+	        	 viewEmployeeById(request, response);
+	     	   
+	        } else if ("/viewByName".equals(pathInfo)) {
+	            // Handle settings GET
+	        	viewEmployeeByName(request, response);
+	        }else {
+		
+	            listAllEmployee(request, response);  
+	        } 
     }
    
 %>
 
 <%!
-     private void saveEmployeeRecord(HttpServletRequest request, HttpServletResponse response){
-		
+
+private void viewEmployeeByName(HttpServletRequest request, HttpServletResponse response )
+		throws IOException, ServletException{
+	response.setContentType("text/html");  
+    PrintWriter out=response.getWriter();  
+    
+	 out.println("<h1>Employees BY Name</h1>");  
+	 String viewEmpName = request.getParameter("viewEmpName");
+	 List<EmployeeDTO> empList=null;
+	if(viewEmpName != null) {
+		 empList=EmployeeService.getEmployeeByName(viewEmpName);
+	}
+
+	   if (empList==null) {
+	  out.print("No record found for employee name: "+viewEmpName); 
+	   }{ 
+		  out.print("<table border='1' width='80%'");  
+     out.print("<tr><th>Id</th><th>Name</th><th>Email</th><th>Country</th></tr>");  
+       for(EmployeeDTO e:empList){  
+      out.print("<tr>"
+      		+ "<td>"+e.getEmpId()+"</td><td>"+e.getEmpName()+"</td>"+  
+             "<td>"+e.getMailId()+"</td><td>"+e.getCountry()+"</td>"
+             + "</tr>");  
+     }  
+     out.print("</table>");  
+	   }
+}
+
+private void viewEmployeeById(HttpServletRequest request, HttpServletResponse response )
+		throws IOException, ServletException{
+	
+	 response.setContentType("text/html");  
+     PrintWriter out=response.getWriter();  
+     
+	out.println("<h1>Employees BY ID</h1>"); 
+	 String viewEmpId = request.getParameter("viewEmpId");
+	int empId = 0; 
+	if(viewEmpId != null) {
+		empId= Integer.parseInt(viewEmpId); 
+	}
+	 
+	   EmployeeDTO emp=EmployeeService.getEmployeeById(empId);
+	   
+	   if (emp==null) {
+	  out.print("No record found for employee Id: "+empId); 
+	   }{ 
+	out.print("<table border='1'>");  
+	out.print("<tr><td>Employee ID: </td><td>"+emp.getEmpId()+"</td></tr>");  
+	out.print("<tr><td>Name:</td><td>"+emp.getEmpName()+"</td></tr>");  
+	out.print("<tr><td>Email:</td><td>"+emp.getMailId()+"</td></tr>");  
+	out.print("<tr><td>Country:</td><td>"+emp.getCountry()+"<td></tr>");   
+	out.print("</table>");  
+	   }
+}
+
+private void editEmployee(HttpServletRequest request, HttpServletResponse response )
+		throws IOException, ServletException {
+	 response.setContentType("text/html");  
+     PrintWriter out=response.getWriter();  
+     
+     out.println("<h1>Update Employee</h1>");  
+ 
+     String empId=request.getParameter("editEmpId");  
+     
+     int id=Integer.parseInt(empId);  
+       
+     EmployeeDTO emp=EmployeeService.getEmployeeById(id);
+       
+     out.print("<form action='updateEmployee' method='post'>");  
+     out.print("<table>");  
+     out.print("<tr><td></td><td><input type='hidden' name='editEmpId' value='"+emp.getEmpId()+"'/></td></tr>");  
+     out.print("<tr><td>Name:</td><td><input type='text' name='empName' value='"+emp.getEmpName()+"'/></td></tr>");  
+     out.print("<tr><td>Password:</td><td><input type='password' name='password' value='"+emp.getPassword()+
+     		"'/></td></tr>");  
+     out.print("<tr><td>Email:</td><td><input type='email' name='mailId' value='"+emp.getMailId()+"'/></td></tr>");  
+     out.print("<tr><td>Country:</td><td>");  
+     out.print("<select name='country' style='width:150px'>");  
+     out.print("<option>India</option>");  
+     out.print("<option>USA</option>");  
+     out.print("<option>UK</option>");  
+     out.print("<option>Other</option>");  
+     out.print("</select>");  
+     out.print("</td></tr>");  
+     out.print("<tr><td colspan='2'><input type='submit' value='Edit & Save '/></td></tr>");  
+     out.print("</table>");  
+     out.print("</form>");  
+       
+     out.close();    
+}
+private void listAllEmployee(HttpServletRequest request, HttpServletResponse response ) 
+		throws IOException, ServletException{
+	response.setContentType("text/html");
+	PrintWriter out = response.getWriter();
+	  out.println("<a href='index.html'>Add New Employee</a>");  
+	  out.println("<br/>");
+      out.println("<h1>Employees List</h1>");  
+      
+    List<EmployeeDTO> list=EmployeeService.getEmployyeList();
+      
+    out.print("<table border='1' width='100%'");  
+    out.print("<tr><th>Id</th><th>Name</th><th>Email</th><th>Country</th> "+ 
+            " <th>Edit</th><th>Delete</th></tr>");  
+      for(EmployeeDTO e:list){  
+     out.print("<tr>"
+     		+ "<td>"+e.getEmpId()+"</td><td>"+e.getEmpName()+"</td>"+  
+            "<td>"+e.getMailId()+"</td><td>"+e.getCountry()+"</td>"+
+            // Form uses POST because HTML doesn't natively support PUT
+            "<td><form action='editEmployee' method='post'> "
+            // Hidden input to flag this as a PUT operation
+            +"<input type='hidden' name='_method' value='PUT'>"
+            + "     <input type='hidden' name='editEmpId' value='"+e.getEmpId()+"'/> "
+            + "    <button type='submit'>Edit</button> \r\n"
+            + "</form></td>"+
+            // Form uses POST because HTML doesn't natively support DELETE
+				"<td><form action='deleteEmployee' method='post'> "
+				  // Hidden input to flag this as a PUT operation
+	              +"<input type='hidden' name='_method' value='DELETE'>"
+				+ "     <input type='hidden' name='deleteEmpId' value='"+e.getEmpId()+"'/> "
+				+ "    <button type='submit'>Delete</button> \r\n"
+				+ "</form></td>"
+				+ "</tr>");  
+    }  
+    out.print("</table>");  
+      
+   
+}
+
+private void saveEmployeeRecord(HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+	   response.setContentType("text/html");
+	   PrintWriter out = response.getWriter();
 	   // using through filter
 		String empName=(String) request.getAttribute("empNameFromFilter");
 		
@@ -120,12 +230,24 @@ private  final Logger LOGGER  = Logger.getLogger(this.getClass().getName());
 		 
 		 int status =EmployeeService.addEmployee(emp);
 		 System.out.println("status: " +status);
-		 LOGGER.info("status  "+status);	
+			LOGGER.info("status  "+status);
+	
+		if(status >0) {
+			out.print("<p colour='#76D7C4'>Record inserted successfully.<p>");
+			RequestDispatcher rd= request.getRequestDispatcher("index.html");
+			rd.include(request, response);
+		}else {
+			out.print("<p colour='#F1948A'>Sorry! unable to save record.<p>");
+		}
+		
+		out.close();
 }
 
 
-private void updateEmployeeRecord(HttpServletRequest request, HttpServletResponse response) {
-
+private void updateEmployeeRecord(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	response.setContentType("text/html");  
+	PrintWriter out=response.getWriter();  
+	  
 	String editEmpId=request.getParameter("editEmpId");  
 	int empId=Integer.parseInt(editEmpId);  
 	
@@ -149,7 +271,15 @@ private void updateEmployeeRecord(HttpServletRequest request, HttpServletRespons
 	 
 	int status=EmployeeService.updateEmployee(emp) ; 
 	
+	if(status>0){  
+	    response.sendRedirect("employee");  
+	}else{  
+	    out.println("Sorry! unable to update record");  
+	}  
+	  
+	out.close();
 }
+
 
 %>
 
@@ -170,78 +300,6 @@ private void updateEmployeeRecord(HttpServletRequest request, HttpServletRespons
     </style>
 </head>
 <body>
- <h2>JSP Pure HTML CRUD (GET, POST, PUT, DELETE)</h2>
-
-    <%-- Display Status Message --%>
-    <% if (!message.isEmpty()) { %>
-        <div class="alert"><%= message %></div>
-    <% } %>
-
-    <%-- 1. READ (GET) --%>
-    <div class="box">
-        <h3>Current Data Store [GET]</h3>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Value</th>
-                <th>Actions</th>
-            </tr>
-            <% for (Map.Entry<String, String> entry : items.entrySet()) { %>
-            <tr>
-                <td><%= entry.getKey() %></td>
-                <td><%= entry.getValue() %></td>
-                <td>
-                    <%-- 4. DELETE Form (Tunnels method via hidden param) --%>
-                    <form action="crud.jsp" method="post">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="id" value="<%= entry.getKey() %>">
-                        <input type="submit" value="Delete" style="color:red;">
-                    </form>
-                </td>
-            </tr>
-            <% } %>
-        </table>
-    </div>
-
-    <%-- 2. CREATE (POST) --%>
-    <div class="box">
-       <h1>Add New Employee</h1>  
-			<form action="saveEmployee" method="post">  
-				<table>  
-				<tr><td><input type='hidden' name='empId' value='-1'/></tr>
-				<tr><td>Name:</td><td><input type="text" name="empName"/></td></tr>  
-				<tr><td>Password:</td><td><input type="password" name="password"/></td></tr>  
-				<tr><td>Email:</td><td><input type="email" name="mailId"/></td></tr>  
-				<tr><td>Country:</td><td>  
-				<select name="country" style="width:150px">  
-				<option>India</option>  
-				<option>USA</option>  
-				<option>UK</option>  
-				<option>Other</option>  
-				</select>  
-				</td></tr>  
-				<tr><td colspan="2"><input type="submit" value="Save Employee"/></td></tr>  
-				</table>  
-			</form> 
-    </div>
-
-
-
-
-
-
-
-    <%-- 3. UPDATE (PUT) --%>
-    <div class="box">
-        <h3>Update Resource [PUT]</h3>
-        <form action="crud.jsp" method="post">
-            <%-- Method tunneling hidden field --%>
-            <input type="hidden" name="_method" value="PUT">
-            
-            <label>ID to Update: <input type="text" name="id" required></label>
-            <label>New Value: <input type="text" name="value" required></label>
-            <input type="submit" value="Submit PUT (Update)">
-        </form>
-    </div>
+   <h1> Employee JSP</h1>
 </body>
 </html>
