@@ -4,7 +4,7 @@
 <jsp:include page="header.jsp" />
 
 
-    <h1>Welcome to Home page</h1>
+    <h1>Welcome to Admin Dashboard page</h1>
 
 
  <!-- Step 3: Inject the common footer -->
