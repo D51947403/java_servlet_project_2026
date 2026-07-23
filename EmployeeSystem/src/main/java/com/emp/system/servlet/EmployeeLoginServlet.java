@@ -1,4 +1,4 @@
-package com.emp.system;
+package com.emp.system.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet(description = "LoginServlet", urlPatterns = { "/loginServlet" })
-public class LoginServlet extends HttpServlet {
+@WebServlet(description = "employeeLoginServlet", urlPatterns = { "/employeeLoginServlet" })
+public class EmployeeLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public EmployeeLoginServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

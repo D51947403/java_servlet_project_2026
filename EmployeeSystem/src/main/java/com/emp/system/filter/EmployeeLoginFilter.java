@@ -1,4 +1,4 @@
-package com.emp.system;
+package com.emp.system.filter;
 
 import java.io.IOException;
 import javax.servlet.DispatcherType;
@@ -16,12 +16,12 @@ import javax.servlet.http.HttpFilter;
  */
 @WebFilter(dispatcherTypes = {DispatcherType.REQUEST }
 					, description = "LoginFilter", urlPatterns = { "/loginFilter" })
-public class LoginFilter extends HttpFilter implements Filter {
+public class EmployeeLoginFilter extends HttpFilter implements Filter {
        
     /**
      * @see HttpFilter#HttpFilter()
      */
-    public LoginFilter() {
+    public EmployeeLoginFilter() {
         super();
         // TODO Auto-generated constructor stub
     }

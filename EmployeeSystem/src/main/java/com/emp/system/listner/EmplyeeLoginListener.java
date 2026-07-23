@@ -1,4 +1,4 @@
-package com.emp.system;
+package com.emp.system.listner;
 
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
@@ -9,12 +9,12 @@ import javax.servlet.http.HttpSessionListener;
  *
  */
 @WebListener
-public class LoginListener implements HttpSessionListener {
+public class EmplyeeLoginListener implements HttpSessionListener {
 
     /**
      * Default constructor. 
      */
-    public LoginListener() {
+    public EmplyeeLoginListener() {
         // TODO Auto-generated constructor stub
     }
 
