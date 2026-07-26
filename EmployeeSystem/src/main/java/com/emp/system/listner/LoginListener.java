@@ -4,17 +4,19 @@ import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import com.emp.system.util.EmailUtil;
+import com.emp.system.util.SMSUtil;
+
 /**
  * Application Lifecycle Listener implementation class LoginHttpSessionListener
  *
  */
 @WebListener
-public class EmplyeeLoginListener implements HttpSessionListener {
-
+public class LoginListener implements HttpSessionListener {
     /**
      * Default constructor. 
      */
-    public EmplyeeLoginListener() {
+    public LoginListener() {
         // TODO Auto-generated constructor stub
     }
 
@@ -22,14 +24,17 @@ public class EmplyeeLoginListener implements HttpSessionListener {
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
     public void sessionCreated(HttpSessionEvent se)  { 
-         // TODO Auto-generated method stub
+    	System.out.println("==========LoginListener called ==========");
+    	EmailUtil.sendEmailOtp();
+    	SMSUtil.sendSmsOtp();
     }
 
 	/**
      * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
      */
     public void sessionDestroyed(HttpSessionEvent se)  { 
-         // TODO Auto-generated method stub
+    	System.out.println("==========Session closed  ==========");
+    	
     }
 	
 }

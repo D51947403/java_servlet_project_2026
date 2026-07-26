@@ -20,7 +20,7 @@
         <a href="admin.jsp">Admin</a> | 
         <a href="employee.jsp">Employee</a> | 
         <a href="about.jsp">About Us</a> | 
-        <a href="index.html">Logout</a>
+        <a href="logout">Logout</a>
     </nav>
 </header>
 <div class="content">

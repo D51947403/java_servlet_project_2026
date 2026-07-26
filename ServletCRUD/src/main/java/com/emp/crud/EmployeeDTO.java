@@ -13,7 +13,8 @@ private static final long serialVersionUID = 1L;
  private String mailId;
  private String password;
  private String country;
- 
+
+
 public int getEmpId() {
 	return empId;
 }

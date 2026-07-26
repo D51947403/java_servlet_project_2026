@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!-- Disable Auto-Session in JSPs because it trigger to HttpSessionListener -->
+<%@ page session="false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,12 +8,46 @@
 <title>Employee System</title>
 </head>
 <body>
-    <h1>Welcome to Login page please enter your credential</h1>
-    
-       <a href="home.jsp">Employee Login</a> 
+    <h1>Welcome to Login page please! </h1>
+
+    <div style="margin: 50px auto; width: 300px; text-align: center;">
+      
+        
+        <%-- Display error message if authentication fails --%>
+        <% 
+            String errorMessage = (String)request.getAttribute("errorMessage");
+            if (errorMessage != null) { 
+        %>
+            <p> <%=errorMessage %></p>
+            <p style="color: red;">Invalid credential !</p>
+               Error Code:  ${errorCode}
+        <% 
+        }   
+       %>
+   
+        <h2>Employee Login Form</h2>     
+        <form action="employeeLogin" method="post">
+            <label>Employee Name:</label><br>
+            <input type="text" name="empName" required><br><br>
+            
+            <label>Password:</label><br>
+            <input type="password" name="password" required><br><br>
+            
+            <input type="submit" value="Employee Login">
+        </form>
+        <hr/>
+          <h2>Admin Login Form</h2>     
+        <form action="adminLogin" method="post">
+            <label>Admin Name:</label><br>
+            <input type="text" name="adminName" required><br><br>
+            
+            <label>Password:</label><br>
+            <input type="password" name="adminPass" required><br><br>
+            
+            <input type="submit" value="Admin Login">
+        </form>
+    </div>
+  
        
-       <br/> <br/><br/>
-       
-        <a href="adminDashboard.jsp">Admin Login</a> 
 </body>
 </html>
