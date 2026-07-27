@@ -35,7 +35,7 @@ public class DbConnectUtil {
         
         // Establish connection
         Connection connection = DriverManager.getConnection(url, username, password);
-        System.out.println("Connection Established successfully to: " + url);
+      //  System.out.println("Connection Established successfully to: " + url);
         
         return connection;
     }
