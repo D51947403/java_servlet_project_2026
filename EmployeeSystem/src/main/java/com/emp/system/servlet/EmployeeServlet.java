@@ -47,8 +47,8 @@ public class EmployeeServlet extends HttpServlet {
 		LOGGER.info("Calling GET Method ");
 
 		// Contains the sub-path
-		String pathInfo = request.getPathInfo(); // return "null"
-		System.out.println("pathInfo : " + pathInfo);
+		//String pathInfo = request.getPathInfo(); // return "null"
+		//System.out.println("pathInfo : " + pathInfo);
 		String servletPath = request.getServletPath(); // Returns "/viewByName" or "/viewById"
 		System.out.println("servletPath : " + servletPath);
 
@@ -66,6 +66,7 @@ public class EmployeeServlet extends HttpServlet {
 			// Handle settings GET
 			displayImage(request, response);
 		}else {
+			// /employee
 			getEmployeeList(request, response);
 		}
 		
@@ -166,10 +167,10 @@ public class EmployeeServlet extends HttpServlet {
 
 		String methodOverride = request.getParameter("_method");
 
-		String editEmpId = request.getParameter("editEmpId");
+		String id = request.getParameter("updateEmpId");
 		int updateEmpId = 0;
-		if (editEmpId != null) {
-			updateEmpId = Integer.parseInt(editEmpId);
+		if (id != null) {
+			updateEmpId = Integer.parseInt(id);
 		}
 
 		if ("PUT".equalsIgnoreCase(methodOverride)) {
@@ -238,8 +239,8 @@ public class EmployeeServlet extends HttpServlet {
 	 * @throws IOException
 	 */
 	private void updateEmployeeRecord(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String editEmpId = request.getParameter("editEmpId");
-		int empId = Integer.parseInt(editEmpId);
+		String id = request.getParameter("updateEmpId");
+		int empId = Integer.parseInt(id);
 
 		// using through filter
 		String empName = (String) request.getAttribute("empNameFromFilter");

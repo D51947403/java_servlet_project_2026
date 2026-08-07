@@ -8,7 +8,16 @@
 
     <h1>Welcome to Home page</h1>    <br>
      <p>You have successfully logged in.</p>
-
+   <%-- Display  message if authentication pass --%>
+        <% 
+            String loginSuccess = (String)session.getAttribute("loginSuccess");
+            if (loginSuccess != null) { 
+        %>
+            <p> <%=loginSuccess %></p>
+               ${loginSuccess}
+        <% 
+        }   
+       %>
 <hr/>
 <!--  --------------------------------Employee Detail Section---------------------------------------------    -->
 <%-- Retrieve the object from the request scope and cast it --%>

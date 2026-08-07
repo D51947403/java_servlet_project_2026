@@ -53,8 +53,8 @@ public class LoginFilter extends HttpFilter implements Filter {
 		    //url for employee login  =http://localhost:8080/EmployeeSystem/employeeLogin
 	         //url for admin login =http://localhost:8080/EmployeeSystem/adminLogin
 	        
-           String subPath = request.getPathInfo(); // Returns "/employeeLogin"
-           String servletPath = request.getServletPath(); // Returns "null"
+           String subPath = request.getPathInfo(); //Returns "null"
+           String servletPath = request.getServletPath(); //   Returns "/employeeLogin"
 
 			 System.out.println("servletPath "+servletPath);
 			 System.out.println("subPath "+subPath);
@@ -111,6 +111,7 @@ public class LoginFilter extends HttpFilter implements Filter {
 		         String errorMessage = "Login failed. Please try again.";
 		         request.setAttribute("errorMessage", errorMessage);
 		         request.setAttribute("errorCode", "13-Return From LoginFilter");
+		         // Server side dispatcher 
 				 RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 				 dispatcher.forward(request, response);
 		    }

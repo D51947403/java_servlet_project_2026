@@ -138,7 +138,7 @@ List<EmployeeDTO> list = (List<EmployeeDTO>) session.getAttribute("empList");
         %>
 <form action='updateEmployee' method='post'>
 <table>
-<tr><td></td><td><input type='hidden' name='editEmpId' value='<%=editEmpObj.getEmpId() %>'/></td></tr>
+<tr><td></td><td><input type='hidden' name='updateEmpId' value='<%=editEmpObj.getEmpId() %>'/></td></tr>
 <tr><td>Name:</td><td><input type='text' name='empName' value='<%=editEmpObj.getEmpName() %>'/></td></tr>
 <tr><td>Password:</td><td><input type='password' name='password' value='<%=editEmpObj.getPassword() %>'/></td></tr>
 <tr><td>Email:</td><td><input type='email' name='mailId' value='<%=editEmpObj.getMailId()%>'/></td></tr>

@@ -16,40 +16,21 @@ import com.emp.system.service.LoginService;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet(description = "LoginServlet", urlPatterns = {"/employeeLogin","/adminLogin"})
+@WebServlet(description = "LoginServlet", urlPatterns = {"/employeeLogin","/adminLogin","/guestLogin"})
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+   
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("-----------Login Servlet called -------------");
 		
 		         //url for employee login  =http://localhost:8080/EmployeeSystem/employeeLogin
 		         //url for admin login =http://localhost:8080/EmployeeSystem/adminLogin
 		        
-                String subPath = request.getPathInfo(); // Returns "/employeeLogin"
-                String servletPath = request.getServletPath(); // Returns "null"
+               // String subPath = request.getPathInfo(); //  Returns "null" 
+                String servletPath = request.getServletPath(); //Returns "/employeeLogin"
 
 				 System.out.println("servletPath "+servletPath);
-				 System.out.println("subPath "+subPath);
+				 //System.out.println("subPath "+subPath);
 				 
 			        if ("/employeeLogin".equals(servletPath)) {
 			        	System.out.println("-----------Employee Login -------------");
@@ -92,6 +73,7 @@ public class LoginServlet extends HttpServlet {
 		    // Authentication successful: Save user info in the session scope
 		    session.setAttribute("adminName", adminObj.getAdminName());
 		    session.setAttribute("adminObj", adminObj);
+		    session.setAttribute("loginSuccess", "Admin Login Successful.");
 		    response.sendRedirect("home.jsp");
 		} else {
 			String errorMessage ="Admin name or password error!";
@@ -122,6 +104,7 @@ public class LoginServlet extends HttpServlet {
 		    // Authentication successful: Save user info in the session scope
 		    session.setAttribute("empName", empObj.getEmpName());
 		    session.setAttribute("empObj", empObj);
+		    session.setAttribute("loginSuccess", "Emplyee Login Successful.");
 		    response.sendRedirect("home.jsp");
 		} else {
 			String errorMessage ="Employee name or password error!";
@@ -133,18 +116,5 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
 
 }
